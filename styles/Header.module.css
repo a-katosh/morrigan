@@ -1,3 +1,4 @@
+/* styles/Header.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
 .header {
@@ -27,6 +28,13 @@
   font-weight: bold;
   color: #ff4c4c;
   text-transform: uppercase;
+}
+
+.rightContainer {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  gap: 15px; /* Space between items */
+  margin-left: auto; /* Pushes the rightContainer to the end */
 }
 
 .nav {
@@ -65,7 +73,6 @@
   font-size: 12px;
   color: #ff4c4c;
   text-transform: uppercase;
-  margin-left: auto;
   padding-left: 20px;
   border-left: 1px solid rgba(255, 76, 76, 0.5);
   animation: blink 2s infinite;
@@ -73,4 +80,15 @@
 
 @keyframes blink {
   50% { opacity: 0; }
+}
+
+.profileLink {
+  margin-left: 20px; /* Space between the warning and the profile picture */
+}
+
+.profilePicture {
+  width: 40px; /* Adjust size as necessary */
+  height: 40px; /* Adjust size as necessary */
+  border-radius: 50%; /* Makes the image circular */
+  cursor: pointer; /* Indicates it's clickable */
 }
