@@ -16,10 +16,12 @@ export default function SignInPage() {
         {/* Logo and title */}
         <img src="/apollo_logo.png" alt="Apollo Logo" className={styles.logo} />
         <h1 className={styles.title}>APOLLO</h1>
-        <p className={styles.subtitle}>National Security Agency // Secure Login</p>
+        <p className={styles.subtitle}>Secure Login</p>
 
         {/* Warning text that appears above the button */}
-        <div className={styles.warningText}>* Unauthorized access is prohibited by Federal Law *</div>
+        <div className={styles.warningText}>* Unauthorized access is prohibited by Federal Law *
+          
+        </div>
 
         {/* Button for signing in */}
         <button onClick={() => signIn("discord")} className={styles.signInButton}>
