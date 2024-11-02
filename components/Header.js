@@ -17,16 +17,14 @@ const Header = () => {
           <Link href="/dashboard" className={styles.navItem}>Dashboard</Link>
           <Link href="/reports" className={styles.navItem}>Reports</Link>
         </nav>
-        <div className={styles.securityWarning}> Authorized Personnel Only</div>
-        {session && session.user && session.user.image && ( // Check if session and user exist
-          <Link href="/settings" className={styles.profileLink}>
+        <Link href="/settings" className={styles.profileLink}>
             <img 
               src={session.user.image} // Use the session user's image
               alt="User Profile" 
               className={styles.profilePicture} 
             />
           </Link>
-        )}
+        <div className={styles.securityWarning}> Authorized Personnel Only</div>
       </div>
     </header>
   );
