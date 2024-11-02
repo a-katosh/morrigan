@@ -14,7 +14,7 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/signin', // Custom sign-in page
+    signIn: '/dashboard', // Custom sign-in page
   },
   secret: process.env.NEXTAUTH_SECRET, // Optional: define a secret
 });
