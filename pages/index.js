@@ -1,8 +1,19 @@
-// pages/index.js
-import { signIn } from "next-auth/react";
+import { useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import styles from "../styles/SignIn.module.css";
 
 export default function SignInPage() {
+  const { data: session } = useSession(); // Check session for authentication status
+  const router = useRouter(); // Use router for redirection
+
+  useEffect(() => {
+    if (session) {
+      // If the user is logged in, redirect to the dashboard
+      router.push('/dashboard');
+    }
+  }, [session, router]); // Run effect when session changes
+
   return (
     <div className={styles.container}>
       {/* Background matrix overlay */}
@@ -19,8 +30,8 @@ export default function SignInPage() {
         <p className={styles.subtitle}>Secure Login</p>
 
         {/* Warning text that appears above the button */}
-        <div className={styles.warningText}>* Unauthorized access is prohibited by Federal Law *
-          
+        <div className={styles.warningText}>
+          * Unauthorized access is prohibited by Federal Law *
         </div>
 
         {/* Button for signing in */}
