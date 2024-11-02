@@ -1,33 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
 .container {
-    text-align: center;
-    padding: 100px 20px;
-  }
-  
-  .errorCode {
-    font-size: 6rem;
-    font-weight: bold;
-    color: #ffca2b;
-  }
-  
-  .errorMessage {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .errorDescription {  /* Apply this class to the <p> tag */
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-  }
-  
-  .homeLink {
-    padding: 10px 20px;
-    background-color: #ffca2b;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .homeLink:hover {
-    background-color: #ffca2b;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0b0d0f;
+  color: #ffffff;
+  font-family: "Roboto Mono", monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 0, 0, 0.2), transparent 60%);
+  animation: pulse 6s infinite alternate;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.05); opacity: 0.6; }
+}
+
+.card {
+  position: relative;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  max-width: 400px;
+  width: 100%;
+  z-index: 1;
+  animation: fadeInUp 1.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.errorCode {
+  font-size: 72px;
+  font-weight: bold;
+  color: #e74c3c; /* Red color for urgency */
+  margin: 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #e0e0e0;
+}
+
+.message {
+  font-size: 16px;
+  color: #a0a0a0;
+  margin: 20px 0;
+}
+
+.suggestion {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-bottom: 30px;
+}
+
+.homeButton {
+  display: inline-block;
+  background-color: #1a73e8;
+  color: #ffffff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px rgba(26, 115, 232, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.homeButton:hover {
+  background-color: #1669c1;
+  box-shadow: 0 0 20px rgba(26, 115, 232, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.logo {
+  margin-bottom: 20px; /* Space between logo and error code */
+}
