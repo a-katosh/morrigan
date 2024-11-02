@@ -1,58 +1,41 @@
-import { useState } from 'react';
-import styles from '../styles/Header.module.css';
-import Image from 'next/image';
+import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import styles from "../styles/Header.module.css";
 
-const Header = () => {
-  const [isDropdownActive, setDropdownActive] = useState(false);
+export default function Header() {
+  const { data: session } = useSession();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownActive(!isDropdownActive);
-  };
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerLogo}>
-        <a href="#home">
-          <Image src="/zop.png" alt="Company Logo" />
-        </a>
+      <div className={styles.logoContainer}>
+        <img src="/apollo_logo.png" alt="Apollo Logo" className={styles.logo} />
+        <h1 className={styles.title}>APOLLO</h1>
       </div>
 
-      <nav className={styles.nav}>
-        <ul className={styles.navMenu}>
-          <li className={styles.navItem}>
-            <a href="#about-us">About Us</a>
-            <ul className={styles.dropdown}>
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Meet the Team</a></li>
-            </ul>
-          </li>
-          <li className={styles.navItem}>
-            <a href="#projects">Projects</a>
-            <ul className={styles.dropdown}>
-              <li><a href="#">Republic Of Ireland</a></li>
-              <li><a href="#">United Nations</a></li>
-              <li><a href="#">Project Democracy</a></li>
-            </ul>
-          </li>
-          <li className={styles.navItem}>
-            <a href="#services">Services</a>
-            <ul className={styles.dropdown}>
-              <li><a href="#">Design</a></li>
-              <li><a href="#">Development</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-
-      <div className={styles.userDetails}>
-        <button id="signInButton" className={styles.navButton} onClick={toggleDropdown}>
-          Sign In
-        </button>
-        <div id="userDropdown" className={`${styles.userDropdown} ${isDropdownActive ? styles.active : ''}`}>
+      <div className={styles.profileContainer}>
+        {session && session.user.image && (
+          <img
+            src={session.user.image}
+            alt="User Avatar"
+            className={styles.avatar}
+            onClick={toggleDropdown}
+          />
+        )}
+        <div className={`${styles.dropdown} ${dropdownOpen ? styles.show : ""}`}>
+          <button onClick={toggleDropdown} className={styles.dropdownToggle}>
+            Options
+          </button>
+          <div className={styles.dropdownMenu}>
+            <button className={styles.dropdownItem}>Settings</button>
+            <button className={styles.dropdownItem} onClick={() => signOut()}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </header>
   );
-};
-
-export default Header;
+}
