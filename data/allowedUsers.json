@@ -1,0 +1,15 @@
+{
+    "allowedUsers": [
+      {
+        "id": "547499924997275653",
+        "clearance": "TOPSECRET",
+        "permissions": "Director"
+      },
+      {
+        "id": "987654321098765432",
+        "name": "TOPSECRET",
+        "role": "Director"
+      }
+    ]
+  }
+  

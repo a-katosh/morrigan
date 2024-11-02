@@ -21,6 +21,7 @@ const Dashboard = () => {
     return <p>Access denied. Please sign in.</p>; // Optional message for unauthorized access
   }
 
+  
   return (
     <div>
         <Header />
