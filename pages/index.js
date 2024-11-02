@@ -1,18 +1,38 @@
 import { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import styles from "../styles/SignIn.module.css";
+import allowedUsers from '../data/allowedUsers.json'; // Import the allowed user data
 
 export default function SignInPage() {
-  const { data: session } = useSession(); // Check session for authentication status
-  const router = useRouter(); // Use router for redirection
+  const { data: session } = useSession(); // Get session data
+
+  // Handle sign-in button click
+  const handleSignIn = () => {
+    if (session) {
+      const user = allowedUsers.allowedUsers.find(user => user.id === session.user.id);
+      if (user) {
+        // User is allowed, redirect to Discord
+        signIn("discord");
+      } else {
+        // Optional: Provide feedback that the user is not authorized
+        alert("You are not authorized to sign in.");
+      }
+    } else {
+      // No session, proceed to sign in with Discord
+      signIn("discord");
+    }
+  };
 
   useEffect(() => {
+    // If already logged in and authorized, redirect to dashboard
     if (session) {
-      // If the user is logged in, redirect to the dashboard
-      router.push('/dashboard');
+      const user = allowedUsers.allowedUsers.find(user => user.id === session.user.id);
+      if (user) {
+        localStorage.setItem('userData', JSON.stringify(user)); // Store user data
+        window.location.href = '/dashboard'; // Redirect to the dashboard
+      }
     }
-  }, [session, router]); // Run effect when session changes
+  }, [session]);
 
   return (
     <div className={styles.container}>
@@ -35,7 +55,7 @@ export default function SignInPage() {
         </div>
 
         {/* Button for signing in */}
-        <button onClick={() => signIn("discord")} className={styles.signInButton}>
+        <button onClick={handleSignIn} className={styles.signInButton}>
           Begin Authentication
         </button>
 
