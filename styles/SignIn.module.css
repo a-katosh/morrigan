@@ -1,21 +1,6 @@
-/* styles/globals.css */
+/* styles/SignIn.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Roboto Mono", monospace;
-  height: 100%;
-  background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1b76714e-b74b-4a7c-bf93-b887c7fef8be/daeuxzx-0495fb3e-913b-4276-880b-3ca8776e30c1.jpg/v1/fill/w_1024,h_576,q_75,strp/nsa_wallpaper_by_quadrixel_daeuxzx-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvMWI3NjcxNGUtYjc0Yi00YTdjLWJmOTMtYjg4N2M3ZmVmOGJlXC9kYWV1eHp4LTA0OTVmYjNlLTkxM2ItNDI3Ni04ODBiLTNjYTg3NzZlMzBjMS5qcGciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.0IGcneUrjTZdr-OfGcBuv3a5eGkuS-rrMZ6R7Z_YrH4'); /* NSA background image */
-  background-size: cover; /* Ensures the image covers the entire screen */
-  background-position: center;
-  background-attachment: fixed; /* Keeps the background fixed while scrolling */
-  color: #ffffff;
-}
-
-* {
-  box-sizing: border-box;
-}
 .container {
   display: flex;
   align-items: center;
