@@ -11,11 +11,11 @@ export default function SignInPage() {
         {/* Logo in the center */}
         <img src="/apollo_logo.png" alt="Apollo Logo" className={styles.logo} />
 
-        <h1 className={styles.title}>APOLLO OPERATIONS</h1>
-        <p className={styles.subtitle}>National Security Portal Access</p>
+        <h1 className={styles.title}>APOLLO</h1>
+        <p className={styles.subtitle}>National Security Agency</p>
         
         <button onClick={() => signIn("discord")} className={styles.signInButton}>
-          Sign in with Discord
+          Authenticate
         </button>
         
         <p className={styles.footerText}>
