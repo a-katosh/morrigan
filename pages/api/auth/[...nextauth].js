@@ -14,7 +14,13 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/dashboard', // Custom sign-in page
+    signIn: '/signin', // Custom sign-in page
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Redirect to the dashboard after sign-in
+      return baseUrl + "/dashboard"; // Modify this if you want different redirect logic
+    },
   },
   secret: process.env.NEXTAUTH_SECRET, // Optional: define a secret
 });
