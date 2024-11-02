@@ -11,8 +11,13 @@ const Dashboard = () => {
     if (!session) router.push("/"); // Redirect if not logged in
   }, [session, status]);
 
+  // Handle cases where session data is still loading
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>; // You can return a loader here
+  }
+
+  if (!session) {
+    return <p>Access denied. Please sign in.</p>; // Optional message for unauthorized access
   }
 
   return (
