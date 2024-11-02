@@ -1,4 +1,3 @@
-/* styles/SignIn.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
 .container {
@@ -19,9 +18,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent 60%);
+  background: radial-gradient(circle at center, rgba(255, 0, 0, 0.1), transparent 60%);
   animation: pulse 6s infinite alternate;
   z-index: 0;
+}
+
+/* Banner at the top */
+.banner {
+  font-size: 12px;
+  color: #ff4c4c;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: blink 1.5s steps(2, start) infinite;
+  background: rgba(255, 76, 76, 0.1);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Blinking restricted access indicator */
+.restrictedIndicator {
+  font-size: 12px;
+  color: #ff4c4c;
+  margin-top: 15px;
+  animation: blink 2s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to { visibility: hidden; }
 }
 
 @keyframes pulse {
@@ -32,11 +56,11 @@
 .card {
   position: relative;
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.8);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
   max-width: 400px;
   width: 100%;
   z-index: 1;
@@ -49,7 +73,7 @@
 }
 
 .logo {
-  width: 80px;
+  width: 70px;
   margin: 0 auto 20px;
   display: block;
 }
@@ -58,18 +82,19 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #e0e0e0;
+  color: #ff4c4c;
   text-transform: uppercase;
 }
 
 .subtitle {
   font-size: 14px;
-  color: #a0a0a0;
-  margin-bottom: 30px;
+  color: #888888;
+  margin-bottom: 25px;
+  text-transform: uppercase;
 }
 
 .signInButton {
-  background-color: #1a73e8;
+  background-color: #d32f2f;
   color: #ffffff;
   padding: 12px 24px;
   border: none;
@@ -79,24 +104,24 @@
   font-weight: bold;
   text-transform: uppercase;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 0 15px rgba(26, 115, 232, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(211, 47, 47, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.1);
   animation: glow 2s ease-in-out infinite alternate;
 }
 
 .signInButton:hover {
-  background-color: #1669c1;
-  box-shadow: 0 0 20px rgba(26, 115, 232, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.15);
+  background-color: #b71c1c;
+  box-shadow: 0 0 20px rgba(211, 47, 47, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 @keyframes glow {
-  from { box-shadow: 0 0 10px rgba(26, 115, 232, 0.6); }
-  to { box-shadow: 0 0 20px rgba(26, 115, 232, 0.8); }
+  from { box-shadow: 0 0 10px rgba(211, 47, 47, 0.6); }
+  to { box-shadow: 0 0 20px rgba(211, 47, 47, 0.8); }
 }
 
 .footerText {
-  font-size: 12px;
+  font-size: 11px;
   color: #888888;
   margin-top: 20px;
   font-style: italic;
-  opacity: 0.8;
+  opacity: 0.7;
 }
