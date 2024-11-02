@@ -1,0 +1,33 @@
+.container {
+    text-align: center;
+    padding: 100px 20px;
+  }
+  
+  .errorCode {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #ffca2b;
+  }
+  
+  .errorMessage {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .errorDescription {  /* Apply this class to the <p> tag */
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+  
+  .homeLink {
+    padding: 10px 20px;
+    background-color: #ffca2b;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .homeLink:hover {
+    background-color: #ffca2b;
+  }
+  

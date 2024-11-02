@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      { "source": "/italia/(.*)", "destination": "/subdomains/italia/$1" },
+      { "source": "/un/(.*)", "destination": "/subdomains/un/$1" }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }
+  
