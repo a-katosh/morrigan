@@ -1,4 +1,4 @@
-import allowedUsers from '../../data/allowedUsers.json';
+import allowedUsers from '../../../data/allowedUsers.json'; // Ensure the path is correct
 import fs from 'fs';
 import path from 'path';
 
@@ -14,6 +14,12 @@ export default function handler(req, res) {
     case 'POST':
       // Add a new user
       const newUser = req.body; // Assuming the user data is sent in the request body
+
+      // Validate that newUser has required properties
+      if (!newUser.id || !newUser.clearance || !newUser.role) {
+        return res.status(400).json({ message: 'Missing required fields: id, clearance, and role.' });
+      }
+
       allowedUsers.allowedUsers.push(newUser);
       fs.writeFileSync(filePath, JSON.stringify(allowedUsers, null, 2));
       res.status(201).json(newUser);

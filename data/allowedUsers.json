@@ -3,11 +3,11 @@
       {
         "id": "547499924997275653",
         "clearance": "TOPSECRET",
-        "permissions": "Director"
+        "role": "Director"
       },
       {
         "id": "987654321098765432",
-        "name": "TOPSECRET",
+        "clearance": "TOPSECRET",
         "role": "Director"
       }
     ]
