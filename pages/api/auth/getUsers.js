@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await axios.get(`http://23.22.198.16:4000/api/user/${userId}`);
+    const response = await axios.get(`https//23.22.198.16:4000/api/user/${userId}`);
     const userData = response.data;
 
     if (userData.userId === userId) {

@@ -18,7 +18,7 @@ export default function SignInPage() {
       console.log("Checking user authorization in external API for userId:", userId);
 
       // Fetch user data from the new API endpoint
-      fetch(`http://23.22.198.16:4000/api/user/${userId}`)
+      fetch(`https://23.22.198.16:4000/api/user/${userId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Error: ${response.status}`);

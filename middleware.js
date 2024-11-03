@@ -14,7 +14,7 @@ export async function middleware(req) {
   console.log(`Fetching user data for userId: ${userId}`);
 
   try {
-    const response = await fetch(`http://23.22.198.16:4000/api/user/${userId}`);
+    const response = await fetch(`https://23.22.198.16:4000/api/user/${userId}`);
     console.log('Response status:', response.status);
     const userData = await response.json();
 
