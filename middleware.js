@@ -8,17 +8,17 @@ export async function middleware(req) {
 
   // Check if the user is authenticated
   if (!token) {
-    console.log('No token found. Redirecting to sign-in.');
-    return NextResponse.redirect(new URL('/api/auth/signin', req.url));
+    alert('No token found. Redirecting to sign-in.');
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   // Call the API route to get user data from DynamoDB
   const userId = token.sub; // Assuming the user ID is in the token
-  console.log(`Fetching user data for userId: ${userId}`);
+  alert(`Fetching user data for userId: ${userId}`);
   const response = await fetch(`${req.nextUrl.origin}/api/getUser?userId=${userId}`);
 
   if (!response.ok) {
-    console.error('Unauthorized access attempt:', await response.text());
+    alert('Unauthorized access attempt:', await response.text());
     return NextResponse.redirect(new URL('/unauthorized', req.url));
   }
 
@@ -30,5 +30,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'], // Specify the routes to apply the middleware
+  matcher: ['/dashboard/'],
 };
