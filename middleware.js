@@ -16,17 +16,15 @@ export async function middleware(req) {
   try {
     const response = await fetch(`${req.nextUrl.origin}/api/getUser?userId=${userId}`);
     console.log('Response status:', response.status);
-    const responseBody = await response.text(); // Get response as text to log it
-    console.log('Response body:', responseBody);
+    const userData = await response.json(); // Parse JSON directly
 
     if (!response.ok) {
-      console.error('Error fetching user data:', responseBody);
+      console.error('Error fetching user data:', userData);
       return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
 
-    const userData = JSON.parse(responseBody);
     const nextResponse = NextResponse.next();
-    nextResponse.headers.set('X-User-Role', userData.role ? userData.role.S : 'Unknown');
+    nextResponse.headers.set('X-User-Role', userData.role); // Now correctly set the user role
     return nextResponse;
 
   } catch (error) {
