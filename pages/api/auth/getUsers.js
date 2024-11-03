@@ -21,11 +21,12 @@ export default async function handler(req, res) {
 
     console.log('User data retrieved from external API:', userData); // Log the retrieved data
 
+    // Directly match the user ID
     if (userData && userData.userId === userId) {
       console.log('User data retrieved successfully:', userData);
       return res.status(200).json(userData);
     } else {
-      console.log('User not found:', userId);
+      console.log('User ID does not match:', userData.userId, '!==', userId);
       return res.status(404).json({ error: 'User not found' });
     }
   } catch (error) {

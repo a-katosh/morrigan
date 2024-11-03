@@ -18,23 +18,19 @@ export async function middleware(req) {
     console.log('Response status from external API:', response.status);
 
     if (!response.ok) {
-      // Handle different status codes accordingly
-      if (response.status === 403) {
-        console.error('Forbidden: User does not have access');
-        return NextResponse.redirect(new URL('/unauthorized', req.url));
-      }
       console.error('Error fetching user data, status code:', response.status);
-      return NextResponse.redirect(new URL('/error', req.url));
+      return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
 
     const userData = await response.json();
     console.log('User data retrieved:', userData);
+
+    // Check if the user IDs match
     if (userData && userData.userId === userId) {
-      const nextResponse = NextResponse.next();
-      nextResponse.headers.set('X-User-Role', userData.role || ''); // Set user role if applicable
-      return nextResponse;
+      // IDs match, allow access
+      return NextResponse.next();
     } else {
-      console.error('User not found:', userData);
+      console.error('User ID mismatch:', userData.userId, '!==', userId);
       return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
   } catch (error) {
