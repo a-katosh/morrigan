@@ -1,3 +1,4 @@
+// middleware.js
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
@@ -16,9 +17,19 @@ export async function middleware(req) {
   try {
     const response = await fetch(`https://23.22.198.16:4000/api/user/${userId}`);
     console.log('Response status:', response.status);
-    const userData = await response.json();
 
-    if (response.ok && userData.userId === userId) {
+    if (!response.ok) {
+      // Handle different status codes accordingly
+      if (response.status === 403) {
+        console.error('Forbidden: User does not have access');
+        return NextResponse.redirect(new URL('/unauthorized', req.url));
+      }
+      console.error('Error fetching user data, status code:', response.status);
+      return NextResponse.redirect(new URL('/error', req.url));
+    }
+
+    const userData = await response.json();
+    if (userData && userData.userId === userId) {
       const nextResponse = NextResponse.next();
       nextResponse.headers.set('X-User-Role', userData.role || ''); // Set user role if applicable
       return nextResponse;
