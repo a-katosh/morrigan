@@ -9,7 +9,6 @@ const dynamoDbClient = new DynamoDBClient({
 });
 
 export default async function handler(req, res) {
-  // Make sure to check if the request method is GET
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   const params = {
-    TableName: 'AllowedUsers', // Make sure this matches your DynamoDB table name
+    TableName: 'AllowedUsers', // Ensure this matches your DynamoDB table name
     Key: {
       id: { S: userId },
     },
@@ -29,14 +28,12 @@ export default async function handler(req, res) {
 
   try {
     const { Item } = await dynamoDbClient.send(new GetItemCommand(params));
-    console.log('Retrieved Item:', Item); // Log the retrieved item
-
+    
     if (!Item) {
-      console.log('User not found in the database for ID:', userId);
+      console.log('User not found:', userId);
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Send back the user data
     res.status(200).json(Item);
   } catch (error) {
     console.error('Error fetching from DynamoDB:', error);
