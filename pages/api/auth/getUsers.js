@@ -1,13 +1,4 @@
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
-
-// Initialize DynamoDB client
-const dynamoDbClient = new DynamoDBClient({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
+import axios from 'axios';
 
 export default async function handler(req, res) {
   console.log(`Received ${req.method} request with query:`, req.query);
@@ -24,32 +15,19 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'User ID is required' });
   }
 
-  const params = {
-    TableName: 'AllowedUsers',
-    Key: {
-      userId: { S: userId }, // Using userId as the partition key
-    },
-  };
-
   try {
-    console.log(`Fetching user data for userId: ${userId}`);
-    const { Item } = await dynamoDbClient.send(new GetItemCommand(params));
+    const response = await axios.get(`http://23.22.198.16:4000/api/user/${userId}`);
+    const userData = response.data;
 
-    if (!Item) {
+    if (userData.userId === userId) {
+      console.log('User data retrieved successfully:', userData);
+      return res.status(200).json(userData);
+    } else {
       console.log('User not found:', userId);
       return res.status(404).json({ error: 'User not found' });
     }
-
-    console.log('User data retrieved successfully:', Item);
-    const formattedItem = {
-      userId: Item.userId.S,        // Extracting userId
-      clearance: Item.clearance.S,   // Extracting clearance
-      role: Item.role.S,             // Extracting role
-    };
-
-    return res.status(200).json(formattedItem);
   } catch (error) {
-    console.error('Error fetching from DynamoDB:', error);
+    console.error('Error fetching from external API:', error);
     return res.status(500).json({ 
       error: 'Failed to fetch data', 
       details: error.message 

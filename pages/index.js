@@ -15,10 +15,10 @@ export default function SignInPage() {
     // If already logged in, check if the user is allowed
     if (session) {
       const userId = session.user.id; // Get user ID from session
-      console.log("Checking user authorization in DynamoDB for userId:", userId);
+      console.log("Checking user authorization in external API for userId:", userId);
 
-      // Fetch user data from your API route that interacts with DynamoDB
-      fetch(`/api/getUser?userId=${userId}`)
+      // Fetch user data from the new API endpoint
+      fetch(`http://23.22.198.16:4000/api/user/${userId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
