@@ -5,7 +5,8 @@ import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 
 // Initialize DynamoDB Client
 const dynamoDbClient = new DynamoDBClient({
-  region: process.env.AWS_REGION,
+  region: process.env.AWS_REGION, // e.g., 'us-east-1'
+  endpoint: process.env.AWS_DYNAMODB_ENDPOINT, // Optional if using a local DynamoDB
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -16,7 +17,7 @@ export async function middleware(req) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (!token) {
-    return NextResponse.redirect(new URL('/', req.url));
+    return NextResponse.redirect(new URL('/api/auth/signin', req.url));
   }
 
   try {
