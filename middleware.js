@@ -1,20 +1,28 @@
-import { NextResponse } from 'next/server';
+// middleware.js
+import { getToken } from 'next-auth/jwt';
+import allowedUsers from './data/allowedUsers.json';
 
-export function middleware(request) {
-  const url = request.nextUrl.clone();
-  const host = request.headers.get('host') || '';
-  const subdomain = host.split('.')[0];
+export async function middleware(req) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  if (subdomain === 'italia') {
-    url.pathname = `/subdomains/italia${url.pathname}`;
-    return NextResponse.rewrite(url);
+  // Redirect to sign-in if no token (user is not authenticated)
+  if (!token) {
+    return Response.redirect(new URL('/api/auth/signin', req.url));
   }
 
-  if (subdomain === 'un') {
-    url.pathname = `/subdomains/un${url.pathname}`;
-    return NextResponse.rewrite(url);
+  // Extract allowedUsers and check if current user is authorized
+  const isAuthorizedUser = allowedUsers.allowedUsers.some(
+    (user) => user.id === token.sub && user.clearance === 'TOPSECRET' && user.role === 'Director'
+  );
+
+  // Redirect unauthorized users to an unauthorized page
+  if (req.nextUrl.pathname === '/dashboard' && !isAuthorizedUser) {
+    return Response.redirect(new URL('/unauthorized', req.url));
   }
 
-  // Default response for root domain
-  return NextResponse.next();
+  return Response.next();
 }
+
+export const config = {
+  matcher: ['/dashboard/:path*'],
+};
