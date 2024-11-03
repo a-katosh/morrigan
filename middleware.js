@@ -1,4 +1,3 @@
-// middleware.js
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
@@ -16,7 +15,7 @@ export async function middleware(req) {
 
   try {
     const response = await fetch(`https://23.22.198.16:4000/api/user/${userId}`);
-    console.log('Response status:', response.status);
+    console.log('Response status from external API:', response.status);
 
     if (!response.ok) {
       // Handle different status codes accordingly
@@ -29,6 +28,7 @@ export async function middleware(req) {
     }
 
     const userData = await response.json();
+    console.log('User data retrieved:', userData);
     if (userData && userData.userId === userId) {
       const nextResponse = NextResponse.next();
       nextResponse.headers.set('X-User-Role', userData.role || ''); // Set user role if applicable

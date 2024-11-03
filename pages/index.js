@@ -14,18 +14,21 @@ export default function SignInPage() {
   useEffect(() => {
     // If already logged in, check if the user is allowed
     if (session) {
+      console.log("Session data:", session); // Log session data
       const userId = session.user.id; // Get user ID from session
       console.log("Checking user authorization in external API for userId:", userId);
 
       // Fetch user data from the new API endpoint
       fetch(`https://23.22.198.16:4000/api/user/${userId}`)
         .then((response) => {
+          console.log('Response status from user API:', response.status); // Log response status
           if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
           }
           return response.json();
         })
         .then((userData) => {
+          console.log('User data retrieved:', userData); // Log user data
           // User is allowed, store user data and redirect
           localStorage.setItem("userData", JSON.stringify(userData)); // Store user data
           window.location.href = "/dashboard"; // Redirect to the dashboard

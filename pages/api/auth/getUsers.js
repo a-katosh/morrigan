@@ -1,4 +1,3 @@
-// getuser.js
 import axios from 'axios';
 
 export default async function handler(req, res) {
@@ -19,6 +18,8 @@ export default async function handler(req, res) {
   try {
     const response = await axios.get(`https://23.22.198.16:4000/api/user/${userId}`);
     const userData = response.data;
+
+    console.log('User data retrieved from external API:', userData); // Log the retrieved data
 
     if (userData && userData.userId === userId) {
       console.log('User data retrieved successfully:', userData);
