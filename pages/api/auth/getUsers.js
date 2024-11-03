@@ -20,13 +20,14 @@ export default async function handler(req, res) {
   }
 
   const params = {
-    TableName: 'AllowedUsers', // Ensure this matches your DynamoDB table name
+    TableName: 'AllowedUsers', // Your DynamoDB table name
     Key: {
       id: { S: userId },
     },
   };
 
   try {
+    console.log(`Fetching user data for userId: ${userId}`);
     const { Item } = await dynamoDbClient.send(new GetItemCommand(params));
     
     if (!Item) {
@@ -34,9 +35,10 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    console.log('User data retrieved successfully:', Item);
     res.status(200).json(Item);
   } catch (error) {
     console.error('Error fetching from DynamoDB:', error);
-    res.status(500).json({ error: 'Failed to fetch data' });
+    res.status(500).json({ error: 'Failed to fetch data', details: error.message });
   }
 }
