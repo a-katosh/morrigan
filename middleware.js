@@ -1,5 +1,6 @@
 // middleware.js
 import { getToken } from 'next-auth/jwt';
+import { NextResponse } from 'next/server'; // Import NextResponse
 import allowedUsers from './data/allowedUsers.json';
 
 export async function middleware(req) {
@@ -7,20 +8,20 @@ export async function middleware(req) {
 
   // Redirect to sign-in if no token (user is not authenticated)
   if (!token) {
-    return Response.redirect(new URL('/api/auth/signin', req.url));
+    return NextResponse.redirect(new URL('/api/auth/signin', req.url)); // Use NextResponse
   }
 
-  // Extract allowedUsers and check if current user is authorized
+  // Check if the user is in the list of allowed users
   const isAuthorizedUser = allowedUsers.allowedUsers.some(
     (user) => user.id === token.sub && user.clearance === 'TOPSECRET' && user.role === 'Director'
   );
 
   // Redirect unauthorized users to an unauthorized page
   if (req.nextUrl.pathname === '/dashboard' && !isAuthorizedUser) {
-    return Response.redirect(new URL('/unauthorized', req.url));
+    return NextResponse.redirect(new URL('/unauthorized', req.url)); // Use NextResponse
   }
 
-  return Response.next();
+  return NextResponse.next(); // Use NextResponse here
 }
 
 export const config = {
