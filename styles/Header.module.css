@@ -87,8 +87,8 @@
 }
 
 .profilePicture {
-  width: 40px; /* Adjust size as necessary */
-  height: 40px; /* Adjust size as necessary */
+  width: 30; /* Adjust size as necessary */
+  height: 30; /* Adjust size as necessary */
   border-radius: 50%; /* Makes the image circular */
   cursor: pointer; /* Indicates it's clickable */
 }
