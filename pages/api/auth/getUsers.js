@@ -1,8 +1,9 @@
 // pages/api/getUser.js
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 
+// Initialize the DynamoDB client
 const dynamoDbClient = new DynamoDBClient({
-  region: process.env.AWS_REGION,
+  region: process.env.AWS_REGION, // e.g., 'us-east-1'
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
   const params = {
     TableName: 'AllowedUsers',
     Key: {
-      id: { S: userId },
+      id: { S: userId }, // The user ID as a string attribute
     },
   };
 
@@ -24,6 +25,7 @@ export default async function handler(req, res) {
     if (!Item) {
       return res.status(404).json({ error: 'User not found' });
     }
+    // Send back the user data, possibly including the role
     res.status(200).json(Item);
   } catch (error) {
     console.error('Error fetching from DynamoDB:', error);
