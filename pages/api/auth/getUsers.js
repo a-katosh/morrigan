@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   const params = {
     TableName: 'AllowedUsers',
     Key: {
-      id: { S: userId },
+      userId: { S: userId },
     },
   };
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
     console.log('User data retrieved successfully:', Item);
     const formattedItem = {
-      id: Item.id.S,
+      userId: Item.id.S,
       // Add other attributes as necessary
     };
 
