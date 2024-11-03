@@ -8,7 +8,7 @@ export async function middleware(req) {
 
   // Redirect to sign-in if no token (user is not authenticated)
   if (!token) {
-    return NextResponse.redirect(new URL('/api/auth/signin', req.url)); // Use NextResponse
+    return NextResponse.redirect(new URL('/', req.url)); // Use NextResponse
   }
 
   // Check if the user is in the list of allowed users
