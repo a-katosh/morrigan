@@ -9,10 +9,19 @@ const dynamoDbClient = new DynamoDBClient({
 });
 
 export default async function handler(req, res) {
+  // Make sure to check if the request method is GET
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
   const { userId } = req.query;
 
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+
   const params = {
-    TableName: 'AllowedUsers',
+    TableName: 'AllowedUsers', // Make sure this matches your DynamoDB table name
     Key: {
       id: { S: userId },
     },
