@@ -21,15 +21,15 @@ export default async function handler(req, res) {
 
   try {
     const { Item } = await dynamoDbClient.send(new GetItemCommand(params));
-    alert('Retrieved Item:', Item); // Log the retrieved item
+    console.log('Retrieved Item:', Item); // Log the retrieved item
     if (!Item) {
-        alert('User not found in the database for ID:', userId);
+        console.log('User not found in the database for ID:', userId);
       return res.status(404).json({ error: 'User not found' });
     }
     // Send back the user data, possibly including the role
     res.status(200).json(Item);
   } catch (error) {
-    alert('Error fetching from DynamoDB:', error);
+    console.log('Error fetching from DynamoDB:', error);
     res.status(500).json({ error: 'Failed to fetch data' });
   }
 }
