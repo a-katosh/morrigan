@@ -1,7 +1,6 @@
 // middleware.js
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt'; // Ensure correct import
-import fetch from 'node-fetch'; // Make sure to install node-fetch if needed
 
 export async function middleware(req) {
   // Get token from the request
