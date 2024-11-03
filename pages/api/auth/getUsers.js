@@ -1,5 +1,6 @@
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 
+// Initialize DynamoDB client
 const dynamoDbClient = new DynamoDBClient({
   region: process.env.AWS_REGION,
   credentials: {
@@ -50,7 +51,9 @@ export default async function handler(req, res) {
     const formattedItem = {
       id: Item.id.S,
       // Include other attributes if necessary
-      ...Item, // Spread the other attributes
+      // Add other properties here as needed, for example:
+      // name: Item.name.S,
+      // email: Item.email.S,
     };
 
     // Send the user data as a JSON response
