@@ -9,6 +9,7 @@
       "lint": "next lint"
     },
     "dependencies": {
+      "node-fetch": "3.3.2",
       "next": "13.0.0", 
       "next-auth": "4.24.10",
       "react": "18.0.0",

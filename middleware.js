@@ -9,7 +9,7 @@ export async function middleware(req) {
 
   // Check if the user is authenticated
   if (!token) {
-    return NextResponse.redirect(new URL('/api/auth/signin', req.url));
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   // Call the API route to get user data from DynamoDB
