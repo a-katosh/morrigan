@@ -1,36 +1,39 @@
 import { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import styles from "../styles/SignIn.module.css";
-import allowedUsers from '../data/allowedUsers.json'; // Import the allowed user data
 
 export default function SignInPage() {
   const { data: session } = useSession(); // Get session data
 
   // Handle sign-in button click
   const handleSignIn = () => {
-    if (session) {
-      const user = allowedUsers.allowedUsers.find(user => user.id === session.user.id);
-      if (user) {
-        // User is allowed, redirect to Discord
-        signIn("discord");
-      } else {
-        // Optional: Provide feedback that the user is not authorized
-        alert("You are not authorized to sign in.");
-      }
-    } else {
-      // No session, proceed to sign in with Discord
-      signIn("discord");
-    }
+    // Start sign-in with Discord
+    signIn("discord");
   };
 
   useEffect(() => {
-    // If already logged in and authorized, redirect to dashboard
+    // If already logged in, check if the user is allowed
     if (session) {
-      const user = allowedUsers.allowedUsers.find(user => user.id === session.user.id);
-      if (user) {
-        localStorage.setItem('userData', JSON.stringify(user)); // Store user data
-        window.location.href = '/dashboard'; // Redirect to the dashboard
-      }
+      const userId = session.user.id; // Get user ID from session
+      console.log("Checking user authorization in DynamoDB for userId:", userId);
+
+      // Fetch user data from your API route that interacts with DynamoDB
+      fetch(`/api/getUser?userId=${userId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((userData) => {
+          // User is allowed, store user data and redirect
+          localStorage.setItem("userData", JSON.stringify(userData)); // Store user data
+          window.location.href = "/dashboard"; // Redirect to the dashboard
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          alert("You are not authorized to access this application.");
+        });
     }
   }, [session]);
 
