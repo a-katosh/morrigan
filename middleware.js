@@ -19,14 +19,18 @@ export async function middleware(req) {
     });
 
     if (!response.ok) {
-      return console.log("lol")
+      // Redirect to /error if the API request fails
+      return NextResponse.redirect(new URL('/error', req.url));
     }
 
     const userData = await response.json();
 
-    if (userData && userData.userId === userId) {
-      return NextResponse.next();;
+    // Only redirect to /unauthorized if the userId doesn't match
+    if (userData && userData.userId !== userId) {
+      return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
+
+    return NextResponse.next();
   } catch (error) {
     console.error('Error in middleware fetching user data:', error);
     return NextResponse.redirect(new URL('/error', req.url));
