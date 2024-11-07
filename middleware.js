@@ -25,12 +25,13 @@ export async function middleware(req) {
 
     const userData = await response.json();
 
-    // Only redirect to /unauthorized if the userId doesn't match
+    // Redirect to /unauthorized only if the userId doesn't match
     if (userData && userData.userId !== userId) {
       return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
 
-    return NextResponse.next();
+    // Redirect to /dashboard if the userId matches
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   } catch (error) {
     console.error('Error in middleware fetching user data:', error);
     return NextResponse.redirect(new URL('/error', req.url));
