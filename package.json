@@ -16,6 +16,7 @@
       "react-dom": "18.0.0",
       "axios": "1.7.7",
       "@aws-sdk/client-dynamodb": "3.682.0"
+      
     },
     "devDependencies": {
       "eslint": "8.0.0",
