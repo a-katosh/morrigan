@@ -19,7 +19,7 @@ export async function middleware(req) {
     });
 
     if (!response.ok) {
-      return NextResponse.redirect(new URL('/unauthorized', req.url));
+      return console.log("lol")
     }
 
     const userData = await response.json();
