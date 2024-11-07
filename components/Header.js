@@ -1,11 +1,8 @@
 // components/Header.js
-import { useSession } from 'next-auth/react'; // Import useSession to access session data
 import Link from 'next/link';
 import styles from '../styles/Header.module.css';
 
 const Header = () => {
-  const { data: session } = useSession(); // Get session data
-
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
