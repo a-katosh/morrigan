@@ -4,8 +4,7 @@ import Link from 'next/link';
 import styles from '../styles/Header.module.css';
 
 const Header = () => {
-  const { data: session } = useSession(); // Get session data
-
+  const { data: session } = useSession(); // Get session dat
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
