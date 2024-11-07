@@ -18,19 +18,23 @@ export async function middleware(req) {
       headers: { 'Authorization': `Bearer ${token.accessToken}` },
     });
 
+    console.log('Response status:', response.status); // Debugging line
+    console.log('Response OK:', response.ok);         // Debugging line
+
     if (!response.ok) {
       // Redirect to /error if the API request fails
       return NextResponse.redirect(new URL('/error', req.url));
     }
 
     const userData = await response.json();
+    console.log('User Data:', userData);              // Debugging line
 
-    // Redirect to /unauthorized only if the userId doesn't match
-    if (userData && userData.userId !== userId) {
+    // Redirect to /unauthorized only if userId doesn't match
+    if (!userData || userData.userId !== userId) {
       return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
 
-    // Redirect to /dashboard if the userId matches
+    // Redirect to /dashboard if userId matches
     return NextResponse.redirect(new URL('/dashboard', req.url));
   } catch (error) {
     console.error('Error in middleware fetching user data:', error);
