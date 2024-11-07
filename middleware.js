@@ -25,9 +25,7 @@ export async function middleware(req) {
     const userData = await response.json();
 
     if (userData && userData.userId === userId) {
-      return NextResponse.next();
-    } else {
-      return NextResponse.redirect(new URL('/unauthorized', req.url));
+      return NextResponse.next();;
     }
   } catch (error) {
     console.error('Error in middleware fetching user data:', error);
