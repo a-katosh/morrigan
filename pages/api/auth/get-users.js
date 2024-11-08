@@ -1,6 +1,5 @@
 // pages/api/get-user.js
-import axios from 'axios';
-import https from 'https';
+import { getUserDataFromSheet } from '../../lib/googleSheets';
 
 export default async function handler(req, res) {
   console.log(`Received ${req.method} request with query:`, req.query);
@@ -16,18 +15,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await axios.get(`https://23.22.198.16:4000/api/user/${userId}`, {
-      httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Disable SSL verification for testing
-    });
-    const userData = response.data;
+    // Get user data from Google Sheets instead of external API
+    const userData = await getUserDataFromSheet(userId);
 
-    if (userData && userData.userId === userId) {
+    if (userData) {
       return res.status(200).json(userData);
     } else {
       return res.status(404).json({ error: 'User not found' });
     }
   } catch (error) {
-    console.error('Error fetching from external API:', error.message);
+    console.error('Error fetching data from Google Sheets:', error.message);
     return res.status(500).json({ error: 'Failed to fetch data', details: error.message });
   }
 }

@@ -14,7 +14,7 @@ export async function middleware(req) {
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'GET',
+      method: 'GET',  
       headers: { 'Authorization': `Bearer ${token.accessToken}` },
     });
 
