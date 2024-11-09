@@ -1,30 +1,45 @@
-// pages/api/get-user.js
-import { getUserDataFromSheet } from '../../../lib/googleSheets';
+// lib/googleSheets.js
+import { google } from 'googleapis';
 
-export default async function handler(req, res) {
-  console.log(`Received ${req.method} request with query:`, req.query);
+export async function getUserDataFromSheet(userId) {
+  console.log("Initializing Google Sheets API...");
 
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+  const auth = new google.auth.GoogleAuth({
+    credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+  });
 
-  const { userId } = req.query;
+  const sheets = google.sheets({ version: 'v4', auth });
 
-  if (!userId) {
-    return res.status(400).json({ error: 'User ID is required' });
-  }
+  const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+  const range = 'Sheet1!C:C'; // Change this range as needed
+
+  console.log("Spreadsheet ID:", spreadsheetId);
+  console.log("Range:", range);
+  console.log("User ID being searched:", userId);
 
   try {
-    // Get user data from Google Sheets instead of external API
-    const userData = await getUserDataFromSheet(userId);
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
 
-    if (userData) {
-      return res.status(200).json(userData);
-    } else {
-      return res.status(404).json({ error: 'User not found' });
+    const rows = response.data.values;
+    console.log("Rows retrieved from Google Sheets:", rows);
+
+    if (rows && rows.length) {
+      for (const row of rows) {
+        if (row[0] === userId) {
+          console.log(`Match found for User ID ${userId}:`, row);
+          return { userId: row[0] }; // Modify to include additional data as needed
+        }
+      }
     }
+
+    console.warn(`No match found for User ID ${userId}`);
+    return null;
   } catch (error) {
-    console.error('Error fetching data from Google Sheets:', error.message);
-    return res.status(500).json({ error: 'Failed to fetch data', details: error.message });
+    console.error('Error accessing Google Sheets API:', error.message);
+    throw new Error('Error accessing Google Sheets API');
   }
 }
