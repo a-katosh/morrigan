@@ -1,5 +1,5 @@
 // pages/api/get-user.js
-import { getUserDataFromSheet } from '../../lib/googleSheets';
+import { getUserDataFromSheet } from '../.../../lib/googleSheets.js';
 
 export default async function handler(req, res) {
   console.log(`Received ${req.method} request with query:`, req.query);
